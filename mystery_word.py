@@ -81,7 +81,7 @@ def start_of_game():
     return computer_picked_word
 
 
-start_of_game()
+computer_picked_word = start_of_game()
 
 def random_word(word_list):
     """
@@ -91,21 +91,43 @@ def random_word(word_list):
     return correct_word
 random_word(source_words)
 
-guess = ""
+guesses = []
 #count = 0
 guess_limit = 8
 out_of_guesses = False
-correct_word = random.choice(source_words)
+correct_word = computer_picked_word
+
+
+
+def display_letter(letter, guesses):
+    """
+    Conditionally display a letter. If the letter is already in
+    the list `guesses`, then return it. Otherwise, return "_".
+    """
+    if letter in guesses:
+        return letter
+    else:
+        return "_"
 
 
 def game_play(out_of_guesses):
-    
-    guess_input = str(input("Please guess a letter: " ))
     count = 0
-    while guess != correct_word and not out_of_guesses:
-        if count < guess_limit:
+    print(correct_word)
+    while not out_of_guesses:
+        guess_input = str(input("Please guess a letter: " ))
+        if guess_input in correct_word:
+            guesses.append(guess_input)
+            display_letters = [display_letter(letter, guesses) for letter in correct_word]
+            print('correct')
+            display_letters = ''.join(display_letters)
+            print(display_letters)
+            if display_letters == correct_word:
+                
+                print("You Win")
+                return
+        elif count < guess_limit -1:
             count+=1
-            print("You have used") + str(count)
+            print("You have used " + str(count))
         else:
             out_of_guesses = True
 
