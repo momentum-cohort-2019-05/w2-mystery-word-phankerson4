@@ -6,6 +6,7 @@ import random
 
 source_words = open("words.txt").read()
 source_words = source_words.lower().split()
+
 # num_of_words = len(source_words)
 computer_picked_word = source_words
 allowed_letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".lower()
@@ -64,16 +65,48 @@ def start_of_game():
     level_choice = int(input(
         "What level would you like to play? Please enter 1-Easy, 2-Medium, 3-Hard. "))
     if level_choice == 1:
-            computer_picked_word = easy_word_list
+        computer_picked_word = random.choice(easy_word_list)
+        
+        print("Your word is ", len(computer_picked_word), "letters")
+
+    elif level_choice == 2:
+        computer_picked_word = random.choice(medium_word_list)
+        print("Your word is ", len(computer_picked_word), "letters")
+    
+    elif level_choice == 3:
+        computer_picked_word = random.choice(hard_word_list)
+            
+        print("Your word is ", len(computer_picked_word), "letters")
+
     return computer_picked_word
-    print("Your word is ", len(random.choice(easy_word_list)), "letters")
-    if level_choice == 2:
-            computer_picked_word = medium_word_list
-    return computer_picked_word
-    print("Your word is ", len(random.choice(medium_word_list)), "letters")
-    if level_choice == 3:
-            computer_picked_word = hard_word_list
-            return computer_picked_word
-    print("Your word is ", len(random.choice(hard_word_list)), "letters")
+
 
 start_of_game()
+
+def random_word(word_list):
+    """
+    Returns a random word from the word list.
+    """
+    correct_word = random.choice(source_words)
+    return correct_word
+random_word(source_words)
+
+guess = ""
+#count = 0
+guess_limit = 8
+out_of_guesses = False
+correct_word = random.choice(source_words)
+
+
+def game_play(out_of_guesses):
+    
+    guess_input = str(input("Please guess a letter: " ))
+    count = 0
+    while guess != correct_word and not out_of_guesses:
+        if count < guess_limit:
+            count+=1
+            print("You have used") + str(count)
+        else:
+            out_of_guesses = True
+
+game_play(out_of_guesses)
